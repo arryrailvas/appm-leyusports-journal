@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>乐鱼体育 · 稳定入口与页面导航</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(150deg, #fff1e0 0%, #fde5cf 40%, #fbd7b5 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1.2rem;
+    }
+
+    .page-wrapper {
+      max-width: 1000px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* 主卡片容器 */
+    .card {
+      background: #ffffffdd;
+      background: #fff;
+      backdrop-filter: blur(2px);
+      border-radius: 36px;
+      box-shadow: 0 12px 30px rgba(180, 100, 40, 0.12), 0 4px 8px rgba(0,0,0,0.02);
+      padding: 2.6rem 2.2rem;
+      margin-bottom: 2rem;
+      transition: box-shadow 0.2s;
+      border: 1px solid rgba(245, 200, 160, 0.2);
+    }
+
+    /* hero 区 */
+    .hero {
+      text-align: center;
+      padding: 2.8rem 1rem 2.2rem;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #5f3e2c;
+      background: linear-gradient(135deg, #9b6b4b, #734f36);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero .sub {
+      font-size: 1.2rem;
+      color: #7b5c46;
+      border-bottom: 2px dashed #e6c6aa;
+      display: inline-block;
+      padding-bottom: 0.4rem;
+      margin-top: 0.2rem;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: 1.6rem auto 0.8rem;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #4f3a2c;
+    }
+
+    /* 优势网格 */
+    .advantage-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.6rem;
+      margin: 0.4rem 0;
+    }
+
+    .advantage-item {
+      background: #fdf7f1;
+      border-radius: 24px;
+      padding: 1.5rem 1.2rem;
+      box-shadow: 0 2px 6px rgba(170, 110, 60, 0.06);
+      border: 1px solid #f7e6d8;
+      transition: transform 0.15s;
+    }
+
+    .advantage-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(150, 80, 30, 0.08);
+    }
+
+    .advantage-item h3 {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: #6f4d38;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .advantage-item h3::before {
+      content: "·";
+      font-size: 2rem;
+      color: #dbaa7a;
+      line-height: 1;
+    }
+
+    .advantage-item p {
+      color: #4f3d31;
+      line-height: 1.5;
+      font-size: 0.98rem;
+    }
+
+    /* 说明区 */
+    .intro-block {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .intro-text {
+      flex: 2;
+      min-width: 260px;
+    }
+
+    .intro-text h2 {
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: #5d3f2e;
+      margin-bottom: 1rem;
+      border-left: 5px solid #dbaa7a;
+      padding-left: 1rem;
+    }
+
+    .intro-text p {
+      margin-bottom: 1rem;
+      line-height: 1.7;
+      color: #3f2f24;
+    }
+
+    .intro-highlight {
+      flex: 1.2;
+      background: #f8eee7;
+      border-radius: 28px;
+      padding: 1.8rem 1.5rem;
+      border: 1px solid #eddacb;
+    }
+
+    .intro-highlight p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #4b372a;
+    }
+
+    .intro-highlight strong {
+      color: #8f654b;
+    }
+
+    /* faq 摘要 */
+    .faq-summary {
+      margin-top: 0.8rem;
+    }
+
+    .faq-summary h2 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #5d3f2e;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .faq-summary h2::after {
+      content: "";
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(to right, #dbb292, transparent);
+    }
+
+    .faq-item {
+      padding: 0.8rem 0;
+      border-bottom: 1px solid #f0dfd2;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-q {
+      font-weight: 500;
+      color: #6a4d3a;
+      margin-bottom: 0.3rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .faq-q::before {
+      content: "Q";
+      color: #c7946a;
+      font-weight: 600;
+    }
+
+    .faq-a {
+      color: #4f3b2e;
+      line-height: 1.5;
+      padding-left: 1.8rem;
+      font-size: 0.95rem;
+    }
+
+    .faq-a a {
+      color: #8f654b;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      text-decoration-color: #dbb292;
+      font-weight: 500;
+    }
+
+    /* 底部链接 */
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 1.2rem 2rem;
+      margin-top: 1.2rem;
+      padding: 1.2rem 0 0.4rem;
+      border-top: 1px solid #ecdccc;
+    }
+
+    .footer-links a, .footer-links span {
+      font-size: 0.95rem;
+      color: #5f4535;
+      text-decoration: none;
+      padding: 0.3rem 0.8rem;
+      border-radius: 40px;
+      background: transparent;
+      transition: background 0.15s;
+    }
+
+    .footer-links a:hover {
+      background: #f1ddd0;
+    }
+
+    .footer-links .brand-link {
+      background: #ffffffb3;
+      border: 1px solid #dbb292;
+      padding: 0.4rem 1.2rem;
+      font-weight: 500;
+      color: #6f4d38;
+      box-shadow: 0 2px 4px rgba(150,80,30,0.05);
+      letter-spacing: 0.3px;
+    }
+
+    .footer-links .brand-link:hover {
+      background: #fff6ef;
+    }
+
+    .footnote {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: #937a68;
+    }
+
+    /* 响应式 */
+    @media (max-width: 600px) {
+      .card {
+        padding: 1.8rem 1.2rem;
+        border-radius: 28px;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .advantage-grid {
+        gap: 1rem;
+      }
+
+      .intro-block {
+        flex-direction: column;
+        gap: 1.2rem;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <!-- hero 区 -->
+    <div class="card hero">
+      <h1>乐鱼体育</h1>
+      <div class="sub">稳定 · 轻量 · 入口明确</div>
+      <p>一个面向日常浏览与内容获取的页面导航，围绕<a href="https://appm-leyusports.com.cn" style="color: #8f654b; text-decoration: underline; text-underline-offset: 4px; font-weight: 500; background: #f1e2d6; padding: 0.06rem 0.3rem; border-radius: 6px;">乐鱼体育</a>提供持续可用的访问引导。页面结构清晰，不依赖第三方跳转，减少中间环节。</p>
+    </div>
+
+    <!-- 优势区 -->
+    <div class="card">
+      <h2 style="font-size: 1.6rem; font-weight: 500; color: #5d3f2e; margin-bottom: 1.4rem;">为什么选择这个入口</h2>
+      <div class="advantage-grid">
+        <div class="advantage-item">
+          <h3>直接页面</h3>
+          <p>避免多层跳转，从首页直达目标内容。所有链接均指向同一稳定地址，减少记忆负担。</p>
+        </div>
+        <div class="advantage-item">
+          <h3>轻量结构</h3>
+          <p>页面不加载额外脚本或外部资源，仅依赖基础 HTML 与 CSS，打开速度快，适配多数设备。</p>
+        </div>
+        <div class="advantage-item">
+          <h3>温和引导</h3>
+          <p>不强调“立即行动”，而是以说明与问答的方式呈现，让访问者自然了解用途与访问方式。</p>
+        </div>
+        <div class="advantage-item">
+          <h3>视觉友好</h3>
+          <p>暖色调渐变配合白色卡片，降低视觉疲劳。圆角与柔和阴影让界面更亲近。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 说明区 + 亮点卡片 -->
+    <div class="card">
+      <div class="intro-block">
+        <div class="intro-text">
+          <h2>关于这个页面</h2>
+          <p>此页面的设计出发点很简单：为经常使用 <strong>乐鱼体育</strong> 的朋友提供一个干净、一致的访问参考。每次打开都能快速找到对应的链接，不需要在多个页面之间反复查找。</p>
+          <p>页面内容围绕<strong>稳定入口</strong>与<strong>页面说明</strong>展开。所有文字均经过斟酌，不包含夸张宣传，只陈述实际用途与特点。无论你是第一次接触还是老朋友，都能在这里获得一致体验。</p>
+        </div>
+        <div class="intro-highlight">
+          <p>📌 页面内的主要链接指向 <strong>https://appm-leyusports.com.cn</strong>，文本统一为「乐鱼体育」。没有额外追踪参数，也没有隐藏跳转。</p>
+          <p style="margin-top: 0.8rem;">💡 你可以将本页加入浏览器书签，作为日常访问的起点。内容定期更新，但链接地址始终保持一致。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ 摘要 -->
+    <div class="card faq-summary">
+      <h2>常见疑问 · 摘要</h2>
+      <div class="faq-item">
+        <div class="faq-q">这个页面和乐鱼体育是什么关系？</div>
+        <div class="faq-a">它是围绕 <a href="https://appm-leyusports.com.cn">乐鱼体育</a> 制作的介绍与导航页，提供直接访问链接和基础说明，并非官方页面，仅用于信息整理。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">链接会变化吗？</div>
+        <div class="faq-a">目前页面中的主链接固定指向 https://appm-leyusports.com.cn ，如果未来有调整会在此说明。建议定期回来看看。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">页面是否收集个人信息？</div>
+        <div class="faq-a">本页为纯静态页面，不包含表单、Cookie 或分析脚本。所有访问数据由浏览器和服务器自行处理，与页面无关。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">移动端显示正常吗？</div>
+        <div class="faq-a">采用响应式设计，在手机和电脑上均可获得舒适的阅读体验。卡片间距、字体大小会随屏幕调整。</div>
+      </div>
+    </div>
+
+    <!-- 底部链接 -->
+    <div class="card" style="padding-bottom: 1.6rem;">
+      <div class="footer-links">
+        <a href="https://appm-leyusports.com.cn" class="brand-link">乐鱼体育</a>
+        <span style="color: #b18b74;">·</span>
+        <a href="#" style="background: #f9ede5;">页面介绍</a>
+        <a href="#" style="background: #f9ede5;">使用参考</a>
+        <span style="color: #b18b74;">·</span>
+        <span style="color: #6f5240;">© 2025 索引页</span>
+      </div>
+      <div class="footnote">
+        本页仅作导航与说明用途，不涉及任何商业推广或用户引导。
+      </div>
+    </div>
+  </div>
+</body>
+</html>
